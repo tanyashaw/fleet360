@@ -4,23 +4,55 @@ import { ArrowUpRight } from "lucide-react";
 
 export const InsightsPage = ({ onNavigate }) => {
   const [insights, setInsights] = useState([]);
+<<<<<<< HEAD
+=======
+  const [loading, setLoading] = useState(true);
+>>>>>>> 57350ca (final commit)
   const [severityFilter, setSeverityFilter] = useState("ALL");
   const [entityFilter, setEntityFilter] = useState("ALL");
 
   useEffect(() => {
     const fetchInsights = async () => {
+<<<<<<< HEAD
       const data = await api.getInsights();
       setInsights(data);
+=======
+      setLoading(true);
+      try {
+        const data = await api.getInsights();
+        setInsights(data || []);
+      } catch (err) {
+        console.error("Insights fetch error:", err);
+      } finally {
+        setLoading(false);
+      }
+>>>>>>> 57350ca (final commit)
     };
     fetchInsights();
   }, []);
 
   const filtered = insights.filter((item) => {
     const matchSev = severityFilter === "ALL" || item.severity === severityFilter;
+<<<<<<< HEAD
     const matchEnt = entityFilter === "ALL" || item.entity_type.toUpperCase() === entityFilter;
     return matchSev && matchEnt;
   });
 
+=======
+    const matchEnt = entityFilter === "ALL" || (item.entity_type && item.entity_type.toUpperCase() === entityFilter);
+    return matchSev && matchEnt;
+  });
+
+  if (loading) {
+    return (
+      <div className="p-12 text-center text-slate-600 dark:text-[#9CA3AF] font-mono flex flex-col items-center justify-center gap-3">
+        <div className="w-6 h-6 border-2 border-[#0284C7] border-t-transparent rounded-full animate-spin" />
+        <div>Analyzing Fleet Telematics & Querying AI Engine...</div>
+      </div>
+    );
+  }
+
+>>>>>>> 57350ca (final commit)
   return (
     <div className="space-y-6">
       {/* Header */}

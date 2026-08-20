@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
+<<<<<<< HEAD
 import { AuthProvider } from "./context/AuthContext";
+=======
+import { AuthProvider, useAuth } from "./context/AuthContext";
+>>>>>>> 57350ca (final commit)
 import { Header } from "./components/layout/Header";
 import { LiveRibbon } from "./components/layout/LiveRibbon";
 import { Sidebar } from "./components/layout/Sidebar";
 
+<<<<<<< HEAD
+=======
+import { LoginPage } from "./pages/LoginPage";
+>>>>>>> 57350ca (final commit)
 import { DashboardPage } from "./pages/DashboardPage";
 import { VehiclesPage } from "./pages/VehiclesPage";
 import { RoutesPage } from "./pages/RoutesPage";
@@ -16,6 +24,10 @@ import { ReportsPage } from "./pages/ReportsPage";
 import { api } from "./services/api";
 
 export function Fleet360App() {
+<<<<<<< HEAD
+=======
+  const { isAuthenticated } = useAuth();
+>>>>>>> 57350ca (final commit)
   const [activePage, setActivePage] = useState("dashboard");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [theme, setTheme] = useState("light"); // Default to bright theme
@@ -40,6 +52,7 @@ export function Fleet360App() {
   };
 
   const loadSummary = async () => {
+<<<<<<< HEAD
     const sum = await api.getDashboardSummary();
     setSummary(sum);
   };
@@ -51,6 +64,30 @@ export function Fleet360App() {
     }, 30000);
     return () => clearInterval(interval);
   }, []);
+=======
+    if (!isAuthenticated) return;
+    try {
+      const sum = await api.getDashboardSummary();
+      setSummary(sum);
+    } catch (e) {
+      console.warn("Summary load warning:", e);
+    }
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      loadSummary();
+      const interval = setInterval(() => {
+        loadSummary();
+      }, 30000);
+      return () => clearInterval(interval);
+    }
+  }, [isAuthenticated]);
+
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+>>>>>>> 57350ca (final commit)
 
   const renderCurrentPage = () => {
     switch (activePage) {

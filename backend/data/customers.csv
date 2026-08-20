@@ -1,0 +1,9 @@
+customer_code,name,industry,contact_person,contact_email,contract_start,contract_end,contract_value,payment_terms,status
+CUST-001,ABC Logistics Pvt Ltd,Logistics,Ramesh Kumar,ramesh@abclogistics.in,2025-04-01,2026-03-31,8400000,NET-30,active
+CUST-002,XYZ Manufacturing Ltd,Manufacturing,Priya Sharma,priya@xyzmanuf.in,2025-04-01,2026-03-31,6500000,NET-45,active
+CUST-003,DEF Industries,Heavy Industry,Anita Verma,anita@defindustries.in,2025-07-01,2026-06-30,5200000,NET-30,active
+CUST-004,GHI Travels & Tours,Tourism,Suresh Pillai,suresh@ghitravels.in,2025-04-01,2026-03-31,4800000,NET-15,active
+CUST-005,JKL Pharma Ltd,Pharmaceuticals,Meena Joshi,meena@jklpharma.in,2025-01-01,2025-12-31,3600000,NET-30,active
+CUST-006,MNO Textiles,Textiles,Vijay Nair,vijay@mnotextiles.in,2025-04-01,2026-03-31,5800000,NET-45,active
+CUST-007,PQR Infrastructure,Infrastructure,Deepak Gupta,deepak@pqrinfra.in,2025-06-01,2026-05-31,9200000,NET-30,active
+CUST-008,STU Exports Ltd,Export-Import,Kavita Rao,kavita@stuexports.in,2025-04-01,2026-03-31,4200000,NET-30,active

@@ -1,0 +1,9 @@
+route_code,origin,destination,distance_km,contract_id,route_type,toll_applicable,status
+MUM-PNE-01,Mumbai,Pune,148,CON-001,intercity,1,active
+MUM-NGP-01,Mumbai,Nagpur,830,CON-002,highway,1,active
+DEL-AGR-01,Delhi,Agra,233,CON-003,highway,1,active
+DEL-JKP-01,Delhi,Jaipur,281,CON-004,highway,1,active
+BNG-CHN-01,Bangalore,Chennai,346,CON-005,highway,1,active
+BNG-HYD-01,Bangalore,Hyderabad,570,CON-006,highway,1,active
+KOL-ASN-01,Kolkata,Asansol,214,CON-007,intercity,0,active
+CHN-COI-01,Chennai,Coimbatore,500,CON-008,highway,1,active
