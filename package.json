@@ -1,0 +1,11 @@
+{
+  "name": "fleet360-root",
+  "version": "1.0.0",
+  "description": "Fleet360 Transportation Analytics Monorepo Root",
+  "private": true,
+  "scripts": {
+    "dev": "npm run dev --prefix frontend",
+    "build": "npm run build --prefix frontend",
+    "install:frontend": "npm install --prefix frontend"
+  }
+}

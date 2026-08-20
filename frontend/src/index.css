@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+:root, html.light {
+  --bg-app: #FFFFFF;
+  --card-bg: #FFFFFF;
+  --card-sub: #F8FAFC;
+  --border-color: #E2E8F0;
+  --text-primary: #0F172A;
+  --text-muted: #64748B;
+  --accent-color: #0284C7;
+  --table-head: #F1F5F9;
+  --table-row-hover: #F8FAFC;
+}
+
+html.dark {
+  --bg-app: #0F1419;
+  --card-bg: #1A1F2E;
+  --card-sub: #0F1419;
+  --border-color: #2D3748;
+  --text-primary: #F5F6F8;
+  --text-muted: #9CA3AF;
+  --accent-color: #06B6D4;
+  --table-head: #0F1419;
+  --table-row-hover: #2D3748/50;
+}
+
+body {
+  background-color: var(--bg-app) !important;
+  color: var(--text-primary) !important;
+  font-family: 'Inter', 'Outfit', system-ui, -apple-system, sans-serif;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+h1, h2, h3, .font-condensed {
+  font-family: 'IBM Plex Sans Condensed', 'Inter', sans-serif;
+}
+
+.font-mono, code, .mono-data {
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-app);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+/* Operational Status Left Border Classes */
+.border-status-green {
+  border-left: 4px solid #16A34A;
+}
+
+.border-status-amber {
+  border-left: 4px solid #D97706;
+}
+
+.border-status-red {
+  border-left: 4px solid #DC2626;
+}
+
+.border-status-cyan {
+  border-left: 4px solid #0284C7;
+}
+
+/* Live Pulse Indicator */
+@keyframes live-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(2, 132, 199, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(2, 132, 199, 0);
+  }
+}
+
+.pulse-dot {
+  animation: live-pulse 2s infinite;
+}
