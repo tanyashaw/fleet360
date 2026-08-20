@@ -12,17 +12,6 @@ export const DashboardPage = ({ onNavigate }) => {
   const [insights, setInsights] = useState([]);
 
   useEffect(() => {
-<<<<<<< HEAD
-    const fetchData = async () => {
-      const sum = await api.getDashboardSummary();
-      const v = await api.getVehiclesRanking();
-      const ins = await api.getInsights();
-      setSummary(sum);
-      setVehicles(v);
-      setInsights(ins);
-    };
-    fetchData();
-=======
     const fetchFastData = async () => {
       try {
         const [sum, v] = await Promise.all([
@@ -41,8 +30,7 @@ export const DashboardPage = ({ onNavigate }) => {
     // Fetch AI insights in background without blocking initial render
     api.getInsights()
       .then((ins) => setInsights(ins || []))
-      .catch((err) => console.warn("Insights background fetch warning:", err));
->>>>>>> 57350ca (final commit)
+      .catch((e) => console.warn("Background insights load error:", e));
   }, []);
 
   if (!summary) {

@@ -104,11 +104,7 @@ export const QuickBooksPage = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-100 dark:divide-[#2D3748]/60">
-<<<<<<< HEAD
-              {status.mapped_accounts.map((acc, i) => (
-=======
               {(status.mapped_accounts || []).map((acc, i) => (
->>>>>>> 57350ca (final commit)
                 <tr key={i} className="hover:bg-slate-50 dark:hover:bg-[#2D3748]/30">
                   <td className="py-3 px-4 text-slate-900 dark:text-[#F5F6F8] font-bold">{acc.qb_account}</td>
                   <td className="py-3 px-4 text-center text-slate-400 dark:text-[#9CA3AF]">

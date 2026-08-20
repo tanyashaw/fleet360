@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from "react";
-<<<<<<< HEAD
-import { AuthProvider } from "./context/AuthContext";
-=======
 import { AuthProvider, useAuth } from "./context/AuthContext";
->>>>>>> 57350ca (final commit)
 import { Header } from "./components/layout/Header";
 import { LiveRibbon } from "./components/layout/LiveRibbon";
 import { Sidebar } from "./components/layout/Sidebar";
 
-<<<<<<< HEAD
-=======
 import { LoginPage } from "./pages/LoginPage";
->>>>>>> 57350ca (final commit)
 import { DashboardPage } from "./pages/DashboardPage";
 import { VehiclesPage } from "./pages/VehiclesPage";
 import { RoutesPage } from "./pages/RoutesPage";
@@ -24,10 +17,7 @@ import { ReportsPage } from "./pages/ReportsPage";
 import { api } from "./services/api";
 
 export function Fleet360App() {
-<<<<<<< HEAD
-=======
   const { isAuthenticated } = useAuth();
->>>>>>> 57350ca (final commit)
   const [activePage, setActivePage] = useState("dashboard");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [theme, setTheme] = useState("light"); // Default to bright theme
@@ -52,55 +42,36 @@ export function Fleet360App() {
   };
 
   const loadSummary = async () => {
-<<<<<<< HEAD
-    const sum = await api.getDashboardSummary();
-    setSummary(sum);
-  };
-
-  useEffect(() => {
-    loadSummary();
-    const interval = setInterval(() => {
-      loadSummary();
-    }, 30000);
-    return () => clearInterval(interval);
-  }, []);
-=======
-    if (!isAuthenticated) return;
     try {
       const sum = await api.getDashboardSummary();
       setSummary(sum);
     } catch (e) {
-      console.warn("Summary load warning:", e);
+      console.warn("Summary load error:", e);
     }
   };
 
   useEffect(() => {
     if (isAuthenticated) {
       loadSummary();
-      const interval = setInterval(() => {
-        loadSummary();
-      }, 30000);
-      return () => clearInterval(interval);
     }
   }, [isAuthenticated]);
 
   if (!isAuthenticated) {
     return <LoginPage />;
   }
->>>>>>> 57350ca (final commit)
 
-  const renderCurrentPage = () => {
+  const renderContent = () => {
     switch (activePage) {
       case "dashboard":
         return <DashboardPage onNavigate={setActivePage} />;
       case "vehicles":
-        return <VehiclesPage />;
+        return <VehiclesPage onNavigate={setActivePage} />;
       case "routes":
-        return <RoutesPage />;
+        return <RoutesPage onNavigate={setActivePage} />;
       case "customers":
-        return <CustomersPage />;
+        return <CustomersPage onNavigate={setActivePage} />;
       case "drivers":
-        return <DriversPage />;
+        return <DriversPage onNavigate={setActivePage} />;
       case "insights":
         return <InsightsPage onNavigate={setActivePage} />;
       case "quickbooks":
@@ -113,21 +84,11 @@ export function Fleet360App() {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0F1419] text-slate-900 dark:text-[#F5F6F8] flex flex-col font-sans transition-colors duration-200 selection:bg-[#0284C7]/20 selection:text-[#0284C7]">
-      {/* 1. Header */}
-      <Header
-        onRefreshData={loadSummary}
-        activePage={activePage}
-        theme={theme}
-        onToggleTheme={toggleTheme}
-      />
-
-      {/* 2. Signature Live Status Ribbon */}
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0F1419] text-slate-900 dark:text-[#F5F6F8] font-sans antialiased transition-colors duration-200">
+      <Header theme={theme} onToggleTheme={toggleTheme} summary={summary} />
       <LiveRibbon summary={summary} />
 
-      {/* 3. Main Workspace Grid */}
-      <div className="flex flex-1 relative">
-        {/* Sidebar */}
+      <div className="flex pt-32 min-h-screen">
         <Sidebar
           activePage={activePage}
           onSelectPage={setActivePage}
@@ -135,9 +96,12 @@ export function Fleet360App() {
           onToggleCollapse={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
         />
 
-        {/* Content Viewport */}
-        <main className="flex-1 p-6 md:p-8 max-w-7xl mx-auto w-full overflow-x-hidden">
-          {renderCurrentPage()}
+        <main
+          className={`flex-1 p-6 transition-all duration-300 overflow-x-hidden ${
+            isSidebarCollapsed ? "ml-16" : "ml-64"
+          }`}
+        >
+          <div className="max-w-7xl mx-auto">{renderContent()}</div>
         </main>
       </div>
     </div>

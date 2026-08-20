@@ -1,17 +1,9 @@
 import React from "react";
-<<<<<<< HEAD
-import { Bell, User, RefreshCw, Sun, Moon } from "lucide-react";
-import { useAuth } from "../../context/AuthContext";
-
-export const Header = ({ onRefreshData, activePage, theme, onToggleTheme }) => {
-  const { user } = useAuth();
-=======
 import { Bell, User, RefreshCw, Sun, Moon, LogOut } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 
 export const Header = ({ onRefreshData, activePage, theme, onToggleTheme }) => {
   const { user, logout } = useAuth();
->>>>>>> 57350ca (final commit)
 
   return (
     <header className="bg-white dark:bg-[#0F1419] border-b border-slate-200 dark:border-[#2D3748] px-6 py-3 flex items-center justify-between sticky top-0 z-40 shadow-xs transition-colors duration-200">
@@ -36,86 +28,56 @@ export const Header = ({ onRefreshData, activePage, theme, onToggleTheme }) => {
         <button
           onClick={onToggleTheme}
           title="Toggle Light / Dark UI Theme"
-<<<<<<< HEAD
-          className="p-2 text-slate-700 dark:text-[#9CA3AF] hover:text-[#0284C7] dark:hover:text-[#06B6D4] bg-slate-100 hover:bg-slate-200 dark:bg-[#1A1F2E] dark:hover:bg-[#2D3748] rounded-lg transition-colors border border-slate-300 dark:border-[#2D3748] flex items-center gap-2 text-xs font-mono font-bold"
-=======
           className="p-2 text-slate-700 dark:text-[#9CA3AF] hover:text-[#0284C7] dark:hover:text-[#06B6D4] bg-slate-100 hover:bg-slate-200 dark:bg-[#1A1F2E] dark:hover:bg-[#2D3748] rounded-lg transition-colors border border-slate-300 dark:border-[#2D3748] flex items-center gap-2 text-xs font-mono font-bold cursor-pointer"
->>>>>>> 57350ca (final commit)
         >
           {theme === "light" ? (
             <>
               <Sun className="w-4 h-4 text-amber-500" />
-<<<<<<< HEAD
-              <span className="hidden sm:inline">Bright Mode Active</span>
-=======
               <span className="hidden sm:inline">Bright Mode</span>
->>>>>>> 57350ca (final commit)
             </>
           ) : (
             <>
               <Moon className="w-4 h-4 text-sky-400" />
-<<<<<<< HEAD
-              <span className="hidden sm:inline">Dark Mode Active</span>
-=======
               <span className="hidden sm:inline">Dark Mode</span>
->>>>>>> 57350ca (final commit)
             </>
           )}
         </button>
 
-        <button
-          onClick={onRefreshData}
-          title="Refresh Backend Analytics Data"
-<<<<<<< HEAD
-          className="p-2 text-slate-600 dark:text-[#9CA3AF] hover:text-[#0284C7] dark:hover:text-[#06B6D4] hover:bg-slate-100 dark:hover:bg-[#1A1F2E] rounded-lg transition-colors border border-slate-200 dark:border-[#2D3748]"
-=======
-          className="p-2 text-slate-600 dark:text-[#9CA3AF] hover:text-[#0284C7] dark:hover:text-[#06B6D4] hover:bg-slate-100 dark:hover:bg-[#1A1F2E] rounded-lg transition-colors border border-slate-200 dark:border-[#2D3748] cursor-pointer"
->>>>>>> 57350ca (final commit)
-        >
-          <RefreshCw className="w-4 h-4" />
+        {/* Notifications */}
+        <button className="p-2 text-slate-600 dark:text-[#9CA3AF] hover:text-slate-900 dark:hover:text-white relative rounded-lg border border-slate-200 dark:border-[#2D3748] bg-slate-50 dark:bg-[#1A1F2E] cursor-pointer">
+          <Bell className="w-4 h-4" />
+          <span className="absolute top-1 right-1 w-2 h-2 bg-[#EF4444] rounded-full animate-pulse" />
         </button>
 
-        {/* Notifications */}
-        <div className="relative">
-          <button className="p-2 text-slate-600 dark:text-[#9CA3AF] hover:text-slate-900 dark:hover:text-[#F5F6F8] hover:bg-slate-100 dark:hover:bg-[#1A1F2E] rounded-lg transition-colors border border-slate-200 dark:border-[#2D3748]">
-            <Bell className="w-4 h-4" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white dark:ring-[#0F1419]" />
-          </button>
-        </div>
-
-<<<<<<< HEAD
-        {/* User Badge */}
-=======
-        {/* User Badge & Logout */}
->>>>>>> 57350ca (final commit)
-        <div className="flex items-center gap-3 pl-3 border-l border-slate-200 dark:border-[#2D3748]">
-          <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-[#1A1F2E] border border-[#0284C7]/40 dark:border-[#06B6D4]/40 flex items-center justify-center text-[#0284C7] dark:text-[#06B6D4]">
-            <User className="w-4 h-4" />
+        {/* User Info Badge */}
+        <div className="flex items-center gap-2.5 pl-3 border-l border-slate-200 dark:border-[#2D3748]">
+          <div className="w-8 h-8 rounded-full bg-sky-100 dark:bg-[#0284C7]/20 border border-sky-300 dark:border-[#0284C7]/40 flex items-center justify-center text-[#0284C7] dark:text-[#06B6D4] font-bold text-xs font-mono">
+            {user?.name ? user.name[0].toUpperCase() : "M"}
           </div>
           <div className="hidden md:block text-left">
-            <div className="text-xs font-semibold text-slate-900 dark:text-[#F5F6F8] font-sans">
-              {user?.name || "Operations Lead"}
+            <div className="text-xs font-bold text-slate-900 dark:text-[#F5F6F8] font-sans leading-tight">
+              {user?.name || "MANAGER Controller"}
             </div>
-            <div className="text-[10px] text-slate-500 dark:text-[#9CA3AF] font-mono">
-<<<<<<< HEAD
-              {user?.role || "CFO Controller"}
-            </div>
-          </div>
-=======
-              {user?.email || "admin@fleet360.in"} &bull; <span className="text-[#0284C7] dark:text-[#06B6D4] font-bold">{user?.role || "ADMIN"}</span>
+            <div className="text-[10px] text-slate-500 dark:text-[#9CA3AF] font-mono flex items-center gap-1">
+              <span>{user?.email || "manager@fleet360.in"}</span>
+              <span className="font-bold text-[#0284C7] uppercase font-condensed">
+                - {user?.role || "MANAGER"}
+              </span>
             </div>
           </div>
+        </div>
 
+        {/* Logout Button */}
+        {logout && (
           <button
             onClick={logout}
-            title="Sign Out of Fleet360"
-            className="p-2 text-slate-500 hover:text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors border border-slate-200 dark:border-[#2D3748] ml-1 flex items-center gap-1.5 text-xs font-mono font-bold cursor-pointer"
+            title="Log Out"
+            className="p-2 text-slate-500 hover:text-red-600 dark:text-[#9CA3AF] dark:hover:text-red-400 bg-slate-50 dark:bg-[#1A1F2E] hover:bg-red-50 dark:hover:bg-red-950/30 rounded-lg border border-slate-200 dark:border-[#2D3748] transition-colors flex items-center gap-1 text-xs font-mono cursor-pointer"
           >
             <LogOut className="w-4 h-4" />
-            <span className="hidden lg:inline">Logout</span>
+            <span className="hidden sm:inline">Logout</span>
           </button>
->>>>>>> 57350ca (final commit)
-        </div>
+        )}
       </div>
     </header>
   );

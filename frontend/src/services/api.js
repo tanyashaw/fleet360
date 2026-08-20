@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-// Fleet360 - API Client Service with In-Memory JWT Storage
-
-=======
-// Fleet360 - API Client Service connected to FastAPI Backend with full attribute mapping
->>>>>>> 57350ca (final commit)
+// Fleet360 - API Client Service connected to FastAPI Backend with Render production URL & static fallback
 import {
   mockDashboardSummary,
   mockVehicles,
@@ -16,27 +11,24 @@ import {
 
 class ApiService {
   constructor() {
-<<<<<<< HEAD
-    this.accessToken = null;
-    this.baseUrl = "/api/v1";
-    this.isStandaloneMock = true; // Set to true for self-contained operation
-=======
     this.accessToken = localStorage.getItem("fleet360_jwt") || null;
-    this.baseUrl = "/api/v1";
-    this.isStandaloneMock = false; // Connected to FastAPI backend
->>>>>>> 57350ca (final commit)
+    
+    // Automatically select local Vite proxy on localhost, or live Render backend URL in production
+    const liveBackendUrl = import.meta.env.VITE_API_URL || "https://fleet360-1.onrender.com/api/v1";
+    this.baseUrl = typeof window !== "undefined" && window.location.hostname === "localhost"
+      ? "/api/v1"
+      : liveBackendUrl;
+
+    this.isStandaloneMock = false; // Connected to live FastAPI backend
   }
 
   setToken(token) {
     this.accessToken = token;
-<<<<<<< HEAD
-=======
     if (token) {
       localStorage.setItem("fleet360_jwt", token);
     } else {
       localStorage.removeItem("fleet360_jwt");
     }
->>>>>>> 57350ca (final commit)
   }
 
   getToken() {
@@ -45,29 +37,6 @@ class ApiService {
 
   clearToken() {
     this.accessToken = null;
-<<<<<<< HEAD
-  }
-
-  async login(username, password) {
-    if (this.isStandaloneMock) {
-      this.accessToken = "mock_jwt_token_fleet360_" + Date.now();
-      return {
-        access_token: this.accessToken,
-        token_type: "bearer",
-        user: { name: "Operations Manager", role: "CFO / Fleet Controller", email: "manager@fleet360.io" }
-      };
-    }
-    // Live FastAPI fetch integration point
-    const res = await fetch(`${this.baseUrl}/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: new URLSearchParams({ username, password })
-    });
-    if (!res.ok) throw new Error("Invalid credentials");
-    const data = await res.json();
-    this.accessToken = data.access_token;
-    return data;
-=======
     localStorage.removeItem("fleet360_jwt");
   }
 
@@ -109,7 +78,7 @@ class ApiService {
         user: { name: userName, role: userRole, email: email || "admin@fleet360.in" }
       };
     } catch (networkError) {
-      console.warn("Backend server unreachable during login. Running demo mode:", networkError);
+      console.warn("Backend server unreachable during login. Running demo fallback:", networkError);
       this.accessToken = "demo_fallback_token_" + Date.now();
       this.setToken(this.accessToken);
       return {
@@ -118,14 +87,10 @@ class ApiService {
         user: { name: userName, role: userRole, email: email || "admin@fleet360.in" }
       };
     }
->>>>>>> 57350ca (final commit)
   }
 
   async getDashboardSummary() {
     if (this.isStandaloneMock) return mockDashboardSummary;
-<<<<<<< HEAD
-    return this._fetch("/dashboard/summary");
-=======
     try {
       const res = await this._fetch("/dashboard/summary");
       return {
@@ -152,14 +117,10 @@ class ApiService {
       console.warn("Using fallback dashboard data:", e);
       return mockDashboardSummary;
     }
->>>>>>> 57350ca (final commit)
   }
 
   async getVehiclesRanking() {
     if (this.isStandaloneMock) return mockVehicles;
-<<<<<<< HEAD
-    return this._fetch("/vehicles/profitability/ranking");
-=======
     try {
       const res = await this._fetch("/vehicles/profitability/ranking");
       const list = res.vehicles || [];
@@ -195,31 +156,20 @@ class ApiService {
       console.warn("Using fallback vehicle data:", e);
       return mockVehicles;
     }
->>>>>>> 57350ca (final commit)
   }
 
   async getVehicleDetail(id) {
     if (this.isStandaloneMock) {
-<<<<<<< HEAD
-      const v = mockVehicles.find((item) => item.id === id) || mockVehicles[0];
-      return v;
-    }
-    return this._fetch(`/vehicles/${id}/profitability`);
-=======
       return mockVehicles.find((item) => item.id === id) || mockVehicles[0];
     }
     const vehicles = await this.getVehiclesRanking();
     const found = vehicles.find((v) => v.id === id || v.vehicle_id === Number(id) || v.vehicle_number === id);
     if (found) return found;
     return vehicles[0] || {};
->>>>>>> 57350ca (final commit)
   }
 
   async getRoutesRanking() {
     if (this.isStandaloneMock) return mockRoutes;
-<<<<<<< HEAD
-    return this._fetch("/routes/profitability/ranking");
-=======
     try {
       const res = await this._fetch("/routes/profitability/ranking");
       const list = res.routes || [];
@@ -253,29 +203,18 @@ class ApiService {
       console.warn("Using fallback route data:", e);
       return mockRoutes;
     }
->>>>>>> 57350ca (final commit)
   }
 
   async getRouteDetail(id) {
     if (this.isStandaloneMock) {
-<<<<<<< HEAD
-      const r = mockRoutes.find((item) => item.id === id) || mockRoutes[0];
-      return r;
-    }
-    return this._fetch(`/routes/${id}/profitability`);
-=======
       return mockRoutes.find((item) => item.id === id) || mockRoutes[0];
     }
     const routes = await this.getRoutesRanking();
     return routes.find((r) => r.id === id || r.code === id || r.route_code === id) || routes[0] || {};
->>>>>>> 57350ca (final commit)
   }
 
   async getCustomersRanking() {
     if (this.isStandaloneMock) return mockCustomers;
-<<<<<<< HEAD
-    return this._fetch("/customers/profitability/ranking");
-=======
     try {
       const res = await this._fetch("/customers/profitability/ranking");
       const list = res.customers || [];
@@ -308,29 +247,18 @@ class ApiService {
       console.warn("Using fallback customer data:", e);
       return mockCustomers;
     }
->>>>>>> 57350ca (final commit)
   }
 
   async getCustomerDetail(id) {
     if (this.isStandaloneMock) {
-<<<<<<< HEAD
-      const c = mockCustomers.find((item) => item.id === id) || mockCustomers[0];
-      return c;
-    }
-    return this._fetch(`/customers/${id}/profitability`);
-=======
       return mockCustomers.find((item) => item.id === id) || mockCustomers[0];
     }
     const customers = await this.getCustomersRanking();
     return customers.find((c) => c.id === id || c.code === id || c.customer_code === id) || customers[0] || {};
->>>>>>> 57350ca (final commit)
   }
 
   async getDriversScorecard() {
     if (this.isStandaloneMock) return mockDrivers;
-<<<<<<< HEAD
-    return this._fetch("/drivers/scorecard");
-=======
     try {
       const res = await this._fetch("/drivers/scorecard");
       const list = res.drivers || [];
@@ -351,29 +279,18 @@ class ApiService {
       console.warn("Using fallback driver data:", e);
       return mockDrivers;
     }
->>>>>>> 57350ca (final commit)
   }
 
   async getDriverDetail(id) {
     if (this.isStandaloneMock) {
-<<<<<<< HEAD
-      const d = mockDrivers.find((item) => item.id === id) || mockDrivers[0];
-      return d;
-    }
-    return this._fetch(`/drivers/${id}/performance`);
-=======
       return mockDrivers.find((item) => item.id === id) || mockDrivers[0];
     }
     const drivers = await this.getDriversScorecard();
     return drivers.find((d) => d.id === id || d.code === id || d.employee_code === id) || drivers[0] || {};
->>>>>>> 57350ca (final commit)
   }
 
   async getInsights() {
     if (this.isStandaloneMock) return mockInsights;
-<<<<<<< HEAD
-    return this._fetch("/insights");
-=======
     try {
       const res = await this._fetch("/insights");
       const list = res.insights || [];
@@ -393,17 +310,10 @@ class ApiService {
       console.warn("Using fallback insight data:", e);
       return mockInsights;
     }
->>>>>>> 57350ca (final commit)
   }
 
   async getQuickBooksStatus() {
     if (this.isStandaloneMock) return mockQuickBooksStatus;
-<<<<<<< HEAD
-    return this._fetch("/quickbooks/status");
-  }
-
-  async _fetch(endpoint, options = {}) {
-=======
     try {
       const res = await this._fetch("/quickbooks/status");
       return {
@@ -426,16 +336,11 @@ class ApiService {
       }
     }
 
->>>>>>> 57350ca (final commit)
     const headers = {
       "Content-Type": "application/json",
       ...(this.accessToken ? { Authorization: `Bearer ${this.accessToken}` } : {}),
       ...options.headers
     };
-<<<<<<< HEAD
-    const res = await fetch(`${this.baseUrl}${endpoint}`, { ...options, headers });
-    if (!res.ok) throw new Error(`API error: ${res.statusText}`);
-=======
 
     const res = await fetch(`${this.baseUrl}${endpoint}`, { ...options, headers });
     if (res.status === 401) {
@@ -458,17 +363,13 @@ class ApiService {
       throw new Error(err.detail?.error?.message || `API error: ${res.statusText}`);
     }
 
->>>>>>> 57350ca (final commit)
     return res.json();
   }
 }
 
-<<<<<<< HEAD
-=======
 function round1(num) {
   if (num === undefined || num === null || isNaN(num)) return 0;
   return Math.round(num * 10) / 10;
 }
 
->>>>>>> 57350ca (final commit)
 export const api = new ApiService();
